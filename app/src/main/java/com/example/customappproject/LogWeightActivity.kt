@@ -1,16 +1,16 @@
 package com.example.customappproject
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationBarView
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class MainActivity : AppCompatActivity() {
+class LogWeightActivity: AppCompatActivity() {
     var weightLogs = mutableListOf(
         GenericLogEntry(LocalDateTime.parse("23/10/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), "6.0kg"),
         GenericLogEntry(LocalDateTime.parse("22/10/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), "6.04kg"),
@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.log_weight)
 
         weightLogs.sortBy{it.datetime}
 
@@ -54,26 +54,28 @@ class MainActivity : AppCompatActivity() {
 
         val bottomNavBar = findViewById<NavigationBarView>(R.id.bottom_navigation)
 
+
         bottomNavBar.setOnItemSelectedListener { item ->
             when(item.itemId) {
                 R.id.weight_cat -> {
                     Log.i("LOGME", "WEIGH")
-                    val intent = Intent(this, LogWeightActivity::class.java)
-                    startActivity(intent)
                     true
 
                 }
                 R.id.feed_cat -> {
                     Log.i("LOGME", "FEED")
+
                     true
                 }
                 R.id.home -> {
                     Log.i("LOGME", "HOME")
+                    super.onBackPressed()
                     true
                 }
                 else -> false
             }
         }
+
     }
 
     fun drawRecyclerView()
