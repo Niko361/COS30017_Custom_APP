@@ -65,6 +65,8 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.feed_cat -> {
                     Log.i("LOGME", "FEED")
+                    val intent = Intent(this, LogFoodEntry::class.java)
+                    startActivity(intent)
                     true
                 }
                 R.id.home -> {
