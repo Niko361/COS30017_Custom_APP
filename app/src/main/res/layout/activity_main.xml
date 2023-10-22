@@ -175,13 +175,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Calories"
-                    app:chipBackgroundColor="#E18E8E" />
+                    android:checkable="true"
+                    android:text="Calories"/>
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/weightChip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:checkable="true"
                     android:text="Weight" />
             </com.google.android.material.chip.ChipGroup>
 
