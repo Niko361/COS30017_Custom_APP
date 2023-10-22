@@ -2,6 +2,8 @@ package com.example.customappproject
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.EditText
@@ -17,7 +19,6 @@ import java.time.format.DateTimeFormatter
 
 class LogFoodEntryActivity: AppCompatActivity() {
     var calorieLogs = mutableListOf(
-        GenericLogEntry(LocalDateTime.parse("23/10/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), "80 Calories"),
         GenericLogEntry(LocalDateTime.parse("22/10/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), "80 Calories"),
         GenericLogEntry(LocalDateTime.parse("21/10/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), "80 Calories"),
         GenericLogEntry(LocalDateTime.parse("20/10/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), "80 Calories"),
@@ -58,7 +59,6 @@ class LogFoodEntryActivity: AppCompatActivity() {
         var foodEntryWeight: Int = 0
         var dailyCalorieGoal: Int = 100
 
-        calorieLogs.sortByDescending{it.datetime}
 
         val selectFoodMenu = findViewById<com.google.android.material.textfield.TextInputLayout>(R.id.selectFoodMenu)
         val items = arrayOf("Whiskas, Wet", "Friskies, Dry", "Purina, Wet", "Add New Food")
@@ -76,13 +76,20 @@ class LogFoodEntryActivity: AppCompatActivity() {
         val logFoodButton = findViewById<Button>(R.id.logFoodButton)
 
         logFoodButton.setOnClickListener {
-
+            calorieLogs.add(GenericLogEntry(LocalDateTime.now(), "${foodEntryWeight} Calories"))
+            drawRecyclerView()
+            // close keyboard after entering weight
+            val view: View? = this.currentFocus
+            if (view != null) {
+                val inputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0)
+            }
         }
 
 
         val bottomNavBar = findViewById<NavigationBarView>(R.id.bottom_navigation)
         bottomNavBar.selectedItemId = R.id.feed_cat
-        val saveButton = findViewById<Button>(R.id.logFoodButton)
+        val saveButton = findViewById<Button>(R.id.logWeightButton)
 
         val remainingDailyCalories = findViewById<TextView>(R.id.remainingDailyCalories)
 
@@ -91,7 +98,7 @@ class LogFoodEntryActivity: AppCompatActivity() {
 
         drawRecyclerView()
 
-        val foodWeightEditText = findViewById<EditText>(R.id.enterFoodWeightEditText)
+        val foodWeightEditText = findViewById<EditText>(R.id.enterFoodWeight)
         foodWeightEditText.addTextChangedListener {
             foodEntryWeight = if(foodWeightEditText.text.isNullOrEmpty())
                 0
@@ -100,7 +107,6 @@ class LogFoodEntryActivity: AppCompatActivity() {
 
             //don't allow the user to log zero grams of food
             saveButton.isEnabled = (foodEntryWeight != 0)
-
             remainingDailyCalories.text = "${dailyCalorieGoal-foodEntryWeight}/${dailyCalorieGoal}"
         }
 
@@ -133,6 +139,7 @@ class LogFoodEntryActivity: AppCompatActivity() {
 
     fun drawRecyclerView()
     {
+        calorieLogs.sortByDescending{it.datetime}
         val list = findViewById<RecyclerView>(R.id.genericLogRecyclerView)
         list.adapter = GenericLogListAdapter(calorieLogs)
         list.layoutManager = LinearLayoutManager(this)

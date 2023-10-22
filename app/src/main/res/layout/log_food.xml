@@ -58,7 +58,7 @@
         app:layout_constraintTop_toBottomOf="@+id/selectFoodMenu" />
 
     <EditText
-        android:id="@+id/enterFoodWeightEditText"
+        android:id="@+id/enterFoodWeight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -76,7 +76,7 @@
         android:text="Remaining Daily Calories:"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enterFoodWeightEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/enterFoodWeight" />
 
     <TextView
         android:id="@+id/remainingDailyCalories"
@@ -93,6 +93,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:enabled="false"
         android:text="Log Food"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
