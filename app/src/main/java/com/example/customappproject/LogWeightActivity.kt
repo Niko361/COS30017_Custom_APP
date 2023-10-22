@@ -49,7 +49,7 @@ class LogWeightActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.log_weight)
+        setContentView(R.layout.activity_log_weight)
 
         drawRecyclerView()
 
