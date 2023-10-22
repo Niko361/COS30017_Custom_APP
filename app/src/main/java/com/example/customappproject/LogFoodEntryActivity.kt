@@ -89,7 +89,7 @@ class LogFoodEntryActivity: AppCompatActivity() {
 
         val bottomNavBar = findViewById<NavigationBarView>(R.id.bottom_navigation)
         bottomNavBar.selectedItemId = R.id.feed_cat
-        val saveButton = findViewById<Button>(R.id.logWeightButton)
+        val saveButton = findViewById<Button>(R.id.logFoodButton)
 
         val remainingDailyCalories = findViewById<TextView>(R.id.remainingDailyCalories)
 

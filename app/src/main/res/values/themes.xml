@@ -30,4 +30,10 @@
     </style>
 
     <style name="Theme.CustomAppProject" parent="Base.Theme.CustomAppProject" />
+
+    <style name="DialogTheme" parent="Base.Theme.CustomAppProject">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowIsFloating">false</item>
+    </style>
 </resources>

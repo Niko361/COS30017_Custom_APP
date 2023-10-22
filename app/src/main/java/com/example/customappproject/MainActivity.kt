@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.Chip
@@ -96,6 +97,29 @@ class MainActivity : AppCompatActivity() {
             weightChip.isChecked = true
             drawRecyclerView(weightLogs)
         }
+
+        val editCatButton = findViewById<Button>(R.id.editCatButton)
+        val closeEditCatButton = findViewById<Button>(R.id.closeEditCatButton)
+
+        editCatButton.setOnClickListener {
+            val dialogFragment = EditCatDetailsFragment()
+            dialogFragment.show(supportFragmentManager, "dialog")
+
+            /*
+            // The device is smaller, so show the fragment fullscreen.
+            val transaction = fragmentManager.beginTransaction()
+            // For a polished look, specify a transition animation.
+            transaction.setTransition(dialogFragment.TRANSIT_FRAGMENT_OPEN)
+            // To make it fullscreen, use the 'content' root view as the container
+            // for the fragment, which is always the root view for the activity.
+            transaction
+                .add(android.R.id.content, dialogFragment)
+                .addToBackStack(null)
+                .commit() */
+
+
+        }
+
 
 
 
