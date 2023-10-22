@@ -99,7 +99,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         val editCatButton = findViewById<Button>(R.id.editCatButton)
-        val closeEditCatButton = findViewById<Button>(R.id.closeEditCatButton)
 
         editCatButton.setOnClickListener {
             val dialogFragment = EditCatDetailsFragment()

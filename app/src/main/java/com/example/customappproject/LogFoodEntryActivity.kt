@@ -69,7 +69,8 @@ class LogFoodEntryActivity: AppCompatActivity() {
             Log.i("CLICKY", selectFoodItem.text.toString())
 
             if(selectFoodItem.text.toString() == "Add New Food"){
-                Log.i("CLICKY", "OPEN MODAL")
+                val dialogFragment = AddNewFoodFragment()
+                dialogFragment.show(supportFragmentManager, "dialog")
             }
         }
 
