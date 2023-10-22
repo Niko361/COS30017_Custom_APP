@@ -6,4 +6,6 @@
         android:title="Friskies, Dry" />
     <item android:id="@+id/option_3"
         android:title="Purina, Wet" />
+    <item android:id="@+id/option_4"
+        android:title="Add New Food" />
 </menu>
