@@ -15,8 +15,6 @@ class AddNewFoodFragment : DialogFragment() {
   container: ViewGroup?,
   savedInstanceState: Bundle?
  ): View? {
-
-
   isCancelable = false
   return inflater.inflate(R.layout.dialog_add_food, container, false)
  }

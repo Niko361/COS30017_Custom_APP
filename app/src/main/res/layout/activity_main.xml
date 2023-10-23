@@ -27,7 +27,7 @@
                 android:id="@+id/imageView"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                app:srcCompat="@drawable/cat_dp" />
+                app:srcCompat="@drawable/cat_note_scan_2" />
 
         </androidx.cardview.widget.CardView>
 
@@ -53,7 +53,7 @@
                         android:id="@+id/nameText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Name: Whitey" />
+                        android:text="Name: Mittens" />
 
                     <TextView
                         android:id="@+id/ageText"

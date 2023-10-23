@@ -104,19 +104,6 @@ class MainActivity : AppCompatActivity() {
             val dialogFragment = EditCatDetailsFragment()
             dialogFragment.show(supportFragmentManager, "dialog")
 
-            /*
-            // The device is smaller, so show the fragment fullscreen.
-            val transaction = fragmentManager.beginTransaction()
-            // For a polished look, specify a transition animation.
-            transaction.setTransition(dialogFragment.TRANSIT_FRAGMENT_OPEN)
-            // To make it fullscreen, use the 'content' root view as the container
-            // for the fragment, which is always the root view for the activity.
-            transaction
-                .add(android.R.id.content, dialogFragment)
-                .addToBackStack(null)
-                .commit() */
-
-
         }
 
 
@@ -145,6 +132,32 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.home -> {
                     Log.i("LOGME", "HOME")
+                    true
+                }
+                else -> false
+            }
+        }
+
+        bottomNavBar.setOnItemReselectedListener { item ->
+            when(item.itemId) {
+                R.id.weight_cat -> {
+                    Log.i("LOGME", "WEIGH")
+                    val intent = Intent(this, LogWeightActivity::class.java)
+                    startActivity(intent)
+                    true
+
+                }
+                R.id.feed_cat -> {
+                    Log.i("LOGME", "FEED")
+                    val intent = Intent(this, LogFoodEntryActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+                R.id.home -> {
+                    Log.i("LOGME", "HOME")
+                    val modalBottomSheet = BottomSheetDialogFragment()
+                    modalBottomSheet.show(supportFragmentManager, BottomSheetDialogFragment.TAG)
+
                     true
                 }
                 else -> false
