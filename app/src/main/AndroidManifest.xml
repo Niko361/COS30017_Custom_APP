@@ -12,9 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CustomAppProject"
         tools:targetApi="31">
-        <activity android:name=".LogWeightActivity"
+        <activity android:name=".LogWeightFragment"
             android:exported="false"/>
-        <activity android:name=".LogFoodEntryActivity"
+        <activity android:name=".LogFoodEntryFragment"
             android:exported="false"
              />
         <activity

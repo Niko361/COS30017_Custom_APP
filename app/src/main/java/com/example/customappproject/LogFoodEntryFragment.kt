@@ -1,5 +1,6 @@
 package com.example.customappproject
 
+import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -8,8 +9,8 @@ import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationBarView
@@ -17,7 +18,7 @@ import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class LogFoodEntryActivity: AppCompatActivity() {
+class LogFoodEntryFragment: Fragment(R.layout.fragment_log_food){
     var calorieLogs = mutableListOf(
         GenericLogEntry(LocalDateTime.parse("22/10/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), "80 Calories"),
         GenericLogEntry(LocalDateTime.parse("21/10/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), "80 Calories"),
@@ -50,9 +51,8 @@ class LogFoodEntryActivity: AppCompatActivity() {
         GenericLogEntry(LocalDateTime.parse("09/09/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), "80 Calories"),
     )
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_log_food)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
 
@@ -60,46 +60,44 @@ class LogFoodEntryActivity: AppCompatActivity() {
         var dailyCalorieGoal: Int = 100
 
 
-        val selectFoodMenu = findViewById<com.google.android.material.textfield.TextInputLayout>(R.id.selectFoodMenu)
+        val selectFoodMenu = view.findViewById<com.google.android.material.textfield.TextInputLayout>(R.id.selectFoodMenu)
         val items = arrayOf("Whiskas, Wet", "Friskies, Dry", "Purina, Wet", "Add New Food")
         (selectFoodMenu.editText as? MaterialAutoCompleteTextView)?.setSimpleItems(items)
 
-        val selectFoodItem = findViewById<AutoCompleteTextView>(R.id.selectFoodItem)
+        val selectFoodItem = view.findViewById<AutoCompleteTextView>(R.id.selectFoodItem)
         selectFoodItem.addTextChangedListener {
             Log.i("CLICKY", selectFoodItem.text.toString())
 
             if(selectFoodItem.text.toString() == "Add New Food"){
                 val dialogFragment = AddNewFoodFragment()
-                dialogFragment.show(supportFragmentManager, "dialog")
+                dialogFragment.show(childFragmentManager, "dialog")
             }
         }
 
-        val logFoodButton = findViewById<Button>(R.id.logFoodButton)
+        val logFoodButton = view.findViewById<Button>(R.id.logFoodButton)
 
         logFoodButton.setOnClickListener {
             calorieLogs.add(GenericLogEntry(LocalDateTime.now(), "${foodEntryWeight} Calories"))
             drawRecyclerView()
             // close keyboard after entering weight
-            val view: View? = this.currentFocus
+            //val view: View? = this.currentFocus
             if (view != null) {
-                val inputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                val inputMethodManager = requireContext().getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                 inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0)
+                Log.i("TESTING", "close keyboard?")
             }
         }
 
+        val saveButton = view.findViewById<Button>(R.id.logFoodButton)
 
-        val bottomNavBar = findViewById<NavigationBarView>(R.id.bottom_navigation)
-        bottomNavBar.selectedItemId = R.id.feed_cat
-        val saveButton = findViewById<Button>(R.id.logFoodButton)
-
-        val remainingDailyCalories = findViewById<TextView>(R.id.remainingDailyCalories)
+        val remainingDailyCalories = view.findViewById<TextView>(R.id.remainingDailyCalories)
 
         remainingDailyCalories.text = "${dailyCalorieGoal-foodEntryWeight}/${dailyCalorieGoal}"
 
 
         drawRecyclerView()
 
-        val foodWeightEditText = findViewById<EditText>(R.id.enterFoodWeight)
+        val foodWeightEditText = view.findViewById<EditText>(R.id.enterFoodWeight)
         foodWeightEditText.addTextChangedListener {
             foodEntryWeight = if(foodWeightEditText.text.isNullOrEmpty())
                 0
@@ -110,29 +108,6 @@ class LogFoodEntryActivity: AppCompatActivity() {
             saveButton.isEnabled = (foodEntryWeight != 0)
             remainingDailyCalories.text = "${dailyCalorieGoal-foodEntryWeight}/${dailyCalorieGoal}"
         }
-
-
-        bottomNavBar.setOnItemSelectedListener { item ->
-            when(item.itemId) {
-                R.id.weight_cat -> {
-                    Log.i("LOGME", "WEIGH")
-                    true
-
-                }
-                R.id.feed_cat -> {
-                    Log.i("LOGME", "FEED")
-
-                    true
-                }
-                R.id.home -> {
-                    Log.i("LOGME", "HOME")
-                    super.onBackPressed()
-                    true
-                }
-                else -> false
-            }
-        }
-
     }
 
 
@@ -141,9 +116,9 @@ class LogFoodEntryActivity: AppCompatActivity() {
     fun drawRecyclerView()
     {
         calorieLogs.sortByDescending{it.datetime}
-        val list = findViewById<RecyclerView>(R.id.genericLogRecyclerView)
-        list.adapter = GenericLogListAdapter(calorieLogs)
-        list.layoutManager = LinearLayoutManager(this)
+        val list = view?.findViewById<RecyclerView>(R.id.genericLogRecyclerView)
+        list?.adapter = GenericLogListAdapter(calorieLogs)
+        list?.layoutManager = LinearLayoutManager(requireContext())
     }
 
 }

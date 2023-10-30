@@ -1,20 +1,22 @@
 package com.example.customappproject
 
+import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
-import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.getSystemService
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationBarView
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class LogWeightActivity: AppCompatActivity() {
+class LogWeightFragment: Fragment(R.layout.fragment_log_weight){
     var weightLogs = mutableListOf(
         GenericLogEntry(LocalDateTime.parse("22/10/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), "6.04Kg"),
         GenericLogEntry(LocalDateTime.parse("21/10/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), "6.10Kg"),
@@ -47,29 +49,28 @@ class LogWeightActivity: AppCompatActivity() {
         GenericLogEntry(LocalDateTime.parse("09/09/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), "6.75Kg"),
     )
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_log_weight)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         drawRecyclerView()
 
         var weightEntryWeight: Double = 0.0
 
 
-        val logWeightButton = findViewById<Button>(R.id.logWeightButton)
+        val logWeightButton = view.findViewById<Button>(R.id.logWeightButton)
 
         logWeightButton.setOnClickListener {
             weightLogs.add(GenericLogEntry(LocalDateTime.now(), "${weightEntryWeight}Kg"))
             drawRecyclerView()
             // close keyboard after entering weight
-            val view: View? = this.currentFocus
+            //val view: View? = this.currentFocus
             if (view != null) {
-                val inputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                val inputMethodManager = requireContext().getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                 inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0)
             }
         }
 
-        val enterWeigh = findViewById<EditText>(R.id.enterWeigh)
+        val enterWeigh = view.findViewById<EditText>(R.id.enterWeigh)
         enterWeigh.addTextChangedListener {
             weightEntryWeight = if(enterWeigh.text.isNullOrEmpty())
                 0.0
@@ -80,36 +81,13 @@ class LogWeightActivity: AppCompatActivity() {
             logWeightButton.isEnabled = (weightEntryWeight != 0.0)
         }
 
-        val bottomNavBar = findViewById<NavigationBarView>(R.id.bottom_navigation)
-        bottomNavBar.selectedItemId = R.id.weight_cat
-        bottomNavBar.setOnItemSelectedListener { item ->
-            when(item.itemId) {
-                R.id.weight_cat -> {
-                    Log.i("LOGME", "WEIGH")
-                    true
-
-                }
-                R.id.feed_cat -> {
-                    Log.i("LOGME", "FEED")
-
-                    true
-                }
-                R.id.home -> {
-                    Log.i("LOGME", "HOME")
-                    super.onBackPressed()
-                    true
-                }
-                else -> false
-            }
-        }
-
     }
 
     fun drawRecyclerView()
     {
         weightLogs.sortByDescending{it.datetime}
-        val list = findViewById<RecyclerView>(R.id.genericLogRecyclerView)
-        list.adapter = GenericLogListAdapter(weightLogs)
-        list.layoutManager = LinearLayoutManager(this)
+        val list = view?.findViewById<RecyclerView>(R.id.genericLogRecyclerView)
+        list?.adapter = GenericLogListAdapter(weightLogs)
+        list?.layoutManager = LinearLayoutManager(requireContext())
     }
 }
