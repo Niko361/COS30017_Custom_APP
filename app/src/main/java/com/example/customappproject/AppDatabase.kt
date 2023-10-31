@@ -9,9 +9,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-@Database(entities = [Cat::class], version = 1)
+@Database(entities = [Cat::class,WeightLog::class,FoodLog::class,FoodType::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun catDao(): CatDao
+    abstract fun weightLogDao(): WeightLogDao
+
 
     companion object {
         // Singleton prevents multiple instances of database opening at the
@@ -51,7 +53,7 @@ abstract class AppDatabase : RoomDatabase() {
                 // comment out the following line.
                 INSTANCE?.let { database ->
                     scope.launch(Dispatchers.IO) {
-                        populateDatabase(database.catDao())
+                        populateDatabase(database.catDao(), database.weightLogDao())
                     }
                 }
             }
@@ -61,19 +63,25 @@ abstract class AppDatabase : RoomDatabase() {
          * Populate the database in a new coroutine.
          * If you want to start with more words, just add them.
          */
-        suspend fun populateDatabase(catDao: CatDao) {
+        suspend fun populateDatabase(catDao: CatDao, weightLogDao: WeightLogDao) {
             // Start the app with a clean database every time.
             // Not needed if you only populate on creation.
             catDao.deleteAll()
 
-            var word = Cat(1, "Jerry", 5000, 4000, 50, "Sedentary", 100)
-            catDao.insert(word)
-            word = Cat(2, "Lucky", 4500, 3900, 45, "Moderately Active", 95)
-            catDao.insert(word)
+            var cat = Cat(1, "Jerry", 5000, 4000, 50, "Sedentary", 100)
+            catDao.insert(cat)
+            cat = Cat(2, "Lucky", 4500, 3900, 45, "Moderately Active", 95)
+            catDao.insert(cat)
             //word = Word("World!")
             //catDao.insert(word)
+
+            weightLogDao.deleteAll()
+            var weightLog = WeightLog(id=1, catId=1, dateTime =  "32423", catWeightGrams =  5000)
+            weightLogDao.insert(weightLog)
+            weightLog = WeightLog(catId=1, dateTime =  "324231", catWeightGrams =  5001)
+            weightLogDao.insert(weightLog)
         }
-    }
+}
 
 
 

@@ -7,7 +7,7 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 
-class DatabaseViewModel(private val repository: CatRepository) : ViewModel() {
+class DatabaseViewModel(private val repository: DatabaseRepository) : ViewModel() {
 
     // Using LiveData and caching what allWords returns has several benefits:
     // - We can put an observer on the data (instead of polling for changes) and only update the
@@ -18,12 +18,19 @@ class DatabaseViewModel(private val repository: CatRepository) : ViewModel() {
     /**
      * Launching a new coroutine to insert the data in a non-blocking way
      */
-    fun insert(cat: Cat) = viewModelScope.launch {
-        repository.insert(cat)
+    fun insertCat(cat: Cat) = viewModelScope.launch {
+        repository.insertCat(cat)
     }
+
+
+    fun getAllWeightLogsForCat(catId: Int): LiveData<List<WeightLog>>{
+        return repository.getWeightLogsForCat(catId).asLiveData()
+    }
+
+
 }
 
-class WordViewModelFactory(private val repository: CatRepository) : ViewModelProvider.Factory {
+class WordViewModelFactory(private val repository: DatabaseRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(DatabaseViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
