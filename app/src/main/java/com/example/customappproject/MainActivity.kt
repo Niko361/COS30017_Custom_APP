@@ -27,6 +27,10 @@ class MainActivity : AppCompatActivity() {
             //}
         }
 
+        databaseViewModel.getAllWeightLogsForCat(1).observe(this) { weightLogs ->
+            Log.i("TESTLOG", weightLogs.toString())
+        }
+
         //Log.i("TESTLOG", databaseViewModel.allCats.toString())
 
 
