@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import java.time.LocalDateTime
 
 
 @Entity (tableName = "Cats")
@@ -21,7 +22,7 @@ data class Cat(
 data class WeightLog(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     @ColumnInfo(name = "cat_id") val catId: Int,
-    @ColumnInfo(name = "datetime") val dateTime: String,
+    @ColumnInfo(name = "datetime") val dateTime: LocalDateTime,
     @ColumnInfo(name = "cat_weight_grams") val catWeightGrams: Int
 )
 
@@ -32,13 +33,13 @@ data class FoodType(
     @ColumnInfo(name = "cals_per_hundred_grams") val calsPerHundredGrams: Int
 )
 @Entity (tableName = "FoodLogs", foreignKeys = [ForeignKey(entity = Cat::class, parentColumns = arrayOf("id"), childColumns = arrayOf("cat_id"), onDelete = ForeignKey.CASCADE),
-                                                ForeignKey(entity = FoodType::class, parentColumns = arrayOf("id"), childColumns = arrayOf("food_id"), onDelete = ForeignKey.CASCADE)] )
+                                                ForeignKey(entity = FoodType::class, parentColumns = arrayOf("id"), childColumns = arrayOf("food_id"), onDelete = ForeignKey.SET_NULL)] )
 data class FoodLog(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     @ColumnInfo(name = "cat_id") val catId: Int,
-    @ColumnInfo(name = "datetime") val dateTime: String,
+    @ColumnInfo(name = "datetime") val dateTime: LocalDateTime,
     @ColumnInfo(name = "food_weight_grams") val foodWeightGrams: Int,
-    @ColumnInfo(name = "food_id") val foodId: Int,
+    @ColumnInfo(name = "food_id") val foodId: Int? = null,
     @ColumnInfo(name = "calories") val calories: Int
 )
 
