@@ -34,6 +34,10 @@ class DatabaseViewModel(private val repository: DatabaseRepository) : ViewModel(
 
     val allFoodTypes: LiveData<List<FoodType>> = repository.allFoodTypes.asLiveData()
 
+    fun insertWeightEntry(weightLog: WeightLog) = viewModelScope.launch {
+        repository.insertWeightLog(weightLog)
+    }
+
 
 }
 

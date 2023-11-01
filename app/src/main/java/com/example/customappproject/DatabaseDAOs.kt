@@ -25,10 +25,10 @@ interface CatDao {
 
 @Dao
 interface WeightLogDao {
-    @Query("SELECT * from WeightLogs WHERE cat_id = :catId")
+    @Query("SELECT * from WeightLogs WHERE cat_id = :catId ORDER BY id DESC")
     fun getAllWeightLogsForCat(catId: Int): Flow<List<WeightLog>>
     @Insert
-    fun insert(weightLog: WeightLog)
+    suspend fun insert(weightLog: WeightLog)
     @Update
     fun update(weightLog: WeightLog)
     @Delete
@@ -39,10 +39,10 @@ interface WeightLogDao {
 
 @Dao
 interface FoodLogDao {
-    @Query("SELECT * from FoodLogs LEFT JOIN FoodTypes ON FoodLogs.food_id = FoodTypes.id WHERE cat_id = :catId")
+    @Query("SELECT * from FoodLogs LEFT JOIN FoodTypes ON FoodLogs.food_id = FoodTypes.id WHERE cat_id = :catId ORDER BY id DESC")
     fun getAllFoodLogsForCat(catId: Int): Flow<List<FoodLog>>
     @Insert
-    fun insert(foodLog: FoodLog)
+    suspend fun insert(foodLog: FoodLog)
     @Update
     fun update(foodLog: FoodLog)
     @Delete
@@ -56,7 +56,7 @@ interface FoodTypeDao {
     @Query("SELECT * from FoodTypes")
     fun getAllFoodTypes(): Flow<List<FoodType>>
     @Insert
-    fun insert(foodType: FoodType)
+    suspend fun insert(foodType: FoodType)
     @Update
     fun update(foodType: FoodType)
     @Delete

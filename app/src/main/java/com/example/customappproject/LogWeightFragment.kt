@@ -12,9 +12,11 @@ import androidx.core.content.getSystemService
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationBarView
+import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -46,6 +48,8 @@ class LogWeightFragment: Fragment(R.layout.fragment_log_weight){
             //drawRecyclerView()
             // close keyboard after entering weight
             //val view: View? = this.currentFocus
+            databaseViewModel.insertWeightEntry(WeightLog(catId = 1, dateTime = LocalDateTime.now(), catWeightGrams = (weightEntryWeight*1000).toInt()))
+
             if (view != null) {
                 val inputMethodManager = requireContext().getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                 inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0)
