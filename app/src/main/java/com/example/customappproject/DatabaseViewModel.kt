@@ -46,6 +46,10 @@ class DatabaseViewModel(private val repository: DatabaseRepository) : ViewModel(
         repository.insertFoodType(foodType)
     }
 
+    suspend fun getLatestRecordedWeightForCat(catId: Int): Int {
+        return repository.getLatestRecordedWeightForCat(catId)
+    }
+
 
 }
 

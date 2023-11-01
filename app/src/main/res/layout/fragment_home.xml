@@ -62,7 +62,7 @@
                         android:text="Age: 7" />
 
                     <TextView
-                        android:id="@+id/goalWeight"
+                        android:id="@+id/goalWeightText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Goal Weight: 6kg" />
@@ -86,7 +86,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/currentweightText"
+                android:id="@+id/currentWeightText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Current Weight: 5kg" />
@@ -98,7 +98,7 @@
                 android:text="Current Loss Rate: 250g/Week" />
 
             <TextView
-                android:id="@+id/goalWeightLossText"
+                android:id="@+id/goalWeightLossRateText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Goal Loss Rate: 50g/Week" />

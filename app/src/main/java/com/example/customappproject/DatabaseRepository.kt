@@ -40,6 +40,11 @@ class DatabaseRepository(private val catDao: CatDao, private val weightLogDao: W
         return foodLogDao.getAllFoodLogsForCat(catId)
     }
 
+    @WorkerThread
+    suspend fun getLatestRecordedWeightForCat(catId: Int): Int{
+        return weightLogDao.getLatestRecordedWeightForCat(catId)
+    }
+
     val allFoodTypes: Flow<List<FoodType>> = foodTypeDao.getAllFoodTypes()
 
 }

@@ -68,10 +68,8 @@ class AddNewFoodFragment : DialogFragment() {
 
 
        saveButton.setOnClickListener {
-                databaseViewModel.insertFoodType(FoodType(foodName="$foodBrand- $foodName", calsPerHundredGrams = foodCalPer100G))
-
-
-       dismiss()
+           databaseViewModel.insertFoodType(FoodType(foodName="$foodBrand- $foodName", calsPerHundredGrams = foodCalPer100G))
+           dismiss()
        }
 
        closeButton.setOnClickListener {

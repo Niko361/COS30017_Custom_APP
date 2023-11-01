@@ -4,14 +4,18 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.LiveData
+import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.Chip
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlin.coroutines.coroutineContext
+import kotlin.coroutines.suspendCoroutine
 
 class HomeFragment: Fragment(R.layout.fragment_home) {
     private val databaseViewModel: DatabaseViewModel by activityViewModels()
@@ -27,8 +31,17 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
 
         Log.i("TESTING", "LOADFRAGMENT")
 
+        val catId = 1
+
         val caloriesChip = view.findViewById<Chip>(R.id.caloriesChip)
         val weightChip = view.findViewById<Chip>(R.id.weightChip)
+
+        val nameText = view.findViewById<TextView>(R.id.nameText)
+        val ageText = view.findViewById<TextView>(R.id.ageText)
+        val goalWeightText = view.findViewById<TextView>(R.id.goalWeightText)
+        val currentWeightText = view.findViewById<TextView>(R.id.currentWeightText)
+        val currentWeightLossRateText = view.findViewById<TextView>(R.id.currentWeightLossRateText)
+        val goalWeightLossRateText = view.findViewById<TextView>(R.id.goalWeightLossRateText)
 
         caloriesChip.isChecked = true
 
@@ -46,18 +59,49 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
             Log.i("TESTING", "weightChip")
         }
 
-        databaseViewModel.getAllWeightLogsForCat(1).observe(viewLifecycleOwner) { weightLogs ->
+
+
+        databaseViewModel.getAllWeightLogsForCat(catId).observe(viewLifecycleOwner) { weightLogs ->
             Log.i("TESTLOG", weightLogs.toString())
             fragmentWeightLogs = weightLogs;
+            Log.i("TESTLOG", fragmentWeightLogs[0].toString())
             if(weightChip.isChecked)
                 drawRecyclerView(weightLogs)
         }
 
-        databaseViewModel.getAllFoodLogsForCat(1).observe(viewLifecycleOwner) { foodLogs ->
+        databaseViewModel.getAllFoodLogsForCat(catId).observe(viewLifecycleOwner) { foodLogs ->
             Log.i("TESTLOG", foodLogs.toString())
             fragmentFoodLogs = foodLogs;
             if(caloriesChip.isChecked)
                 drawRecyclerView(foodLogs)
+        }
+
+        databaseViewModel.allCats.observe(viewLifecycleOwner) {cats ->
+            val selectedCat = cats[catId-1]
+
+            nameText.text = "Name: ${selectedCat.name}"
+            ageText.text = "Age: PLACEHOLDER"
+
+            goalWeightText.text = "Goal Weight: ${"%.2f".format(selectedCat.goalWeightGrams.toDouble() / 1000)} Kg"
+
+            suspend {
+                currentWeightText.text = "Current Weight: ${
+                    "%.2f".format(
+                        databaseViewModel.getLatestRecordedWeightForCat(catId).toDouble() / 1000
+                    )
+                } Kg"
+            }
+
+
+            //currentWeightText.text = "Current Weight: ${"%.2f".format(fragmentWeightLogs[0].catWeightGrams.toDouble() / 1000)} Kg"
+            currentWeightLossRateText.text = "Current Weight Loss Rate: PLACEHOLDER"
+            goalWeightLossRateText.text = "Goal Weight Loss Rate: ${selectedCat.goalWeightLossRateGramsPerWeek} g/Week"
+
+            Log.i("TESTLOG", cats[catId-1].toString())
+            //Log.i("TESTLOG", cats.toString())
+            //cats?.let {
+            //    Log.i("TESTLOG", it.toString())
+            //}
         }
 
         val editCatButton = view.findViewById<Button>(R.id.editCatButton)
