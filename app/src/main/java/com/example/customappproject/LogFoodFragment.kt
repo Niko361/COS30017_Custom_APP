@@ -20,7 +20,7 @@ import java.time.LocalDateTime
 class LogFoodFragment: Fragment(R.layout.fragment_log_food){
     private val databaseViewModel: DatabaseViewModel by activityViewModels()
     private var allFoodTypes = listOf<FoodType>()
-    private var dailyCalorieGoal = 100
+    private var dailyCalorieGoal = 0
     private var foodEntryWeight = 0
     private var foodEntryCalories = 0
     private var selectedFoodType: FoodType? = null
@@ -29,12 +29,20 @@ class LogFoodFragment: Fragment(R.layout.fragment_log_food){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val catId = 1
+
         val logFoodButton = view.findViewById<Button>(R.id.logFoodButton)
         val selectFoodItem = view.findViewById<AutoCompleteTextView>(R.id.selectFoodItem)
         val foodWeightEditText = view.findViewById<EditText>(R.id.enterFoodWeight)
 
 
-        //var foodEntryCalories = 0
+        databaseViewModel.allCats.observe(viewLifecycleOwner) { cats ->
+            val selectedCat = cats[catId - 1]
+
+            dailyCalorieGoal = selectedCat.goalDailyCalories
+
+            foodUpdate()
+        }
 
 
         databaseViewModel.getAllFoodLogsForCat(1).observe(viewLifecycleOwner) { foodLogs ->
