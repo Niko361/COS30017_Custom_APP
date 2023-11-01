@@ -40,7 +40,7 @@ class EditCatDetailsFragment : DialogFragment() {
   val closeEditCatButton = view.findViewById<Button>(R.id.closeEditCatButton)
 
   val nameInput = view.findViewById<EditText>(R.id.nameInput)
-  val currentWeightInput = view.findViewById<EditText>(R.id.currentWeightInput)
+  val startWeightInput = view.findViewById<EditText>(R.id.startWeightInput)
   val goalWeightInput = view.findViewById<EditText>(R.id.goalWeightInput)
   val goalDailyCaloriesInput = view.findViewById<EditText>(R.id.goalDailyCaloriesInput)
   val selectActivityLevelMenu =
@@ -53,7 +53,7 @@ class EditCatDetailsFragment : DialogFragment() {
 
 
   var nameValue: String = ""
-  var currentWeightValue: Int = 0
+  var startWeightValue: Int = 0
   var goalWeightValue: Int = 0
   var goalDailyCaloriesValue: Int = 0
   var activityLevelValue: String = ""
@@ -62,14 +62,14 @@ class EditCatDetailsFragment : DialogFragment() {
    selectedCat = cats[catId - 1]
 
    nameValue = selectedCat!!.name
-   currentWeightValue = selectedCat!!.startWeightGrams
+   startWeightValue = selectedCat!!.startWeightGrams
    goalWeightValue = selectedCat!!.goalWeightGrams
    goalDailyCaloriesValue = selectedCat!!.goalDailyCalories
    activityLevelValue = selectedCat!!.activityLevel
 
    //initialise field values
    nameInput.setText(nameValue)
-   currentWeightInput.setText((currentWeightValue/1000).toString())
+   startWeightInput.setText((startWeightValue/1000).toString())
    goalWeightInput.setText((goalWeightValue/1000).toString())
    goalDailyCaloriesInput.setText(goalDailyCaloriesValue.toString())
    selectActivityLevelMenu.hint = activityLevelValue
@@ -80,15 +80,15 @@ class EditCatDetailsFragment : DialogFragment() {
     ""
    else
     nameInput.text.toString()
-   updateSaveButton(nameValue, currentWeightValue, goalWeightValue, goalDailyCaloriesValue, activityLevelValue)
+   updateSaveButton(nameValue, startWeightValue, goalWeightValue, goalDailyCaloriesValue, activityLevelValue)
   }
 
-  currentWeightInput.addTextChangedListener {
-   currentWeightValue = if(currentWeightInput.text.isNullOrEmpty())
+  startWeightInput.addTextChangedListener {
+   startWeightValue = if(startWeightInput.text.isNullOrEmpty())
     0
    else
-    currentWeightInput.text.toString().toInt()*1000
-   updateSaveButton(nameValue, currentWeightValue, goalWeightValue, goalDailyCaloriesValue, activityLevelValue)
+    startWeightInput.text.toString().toInt()*1000
+   updateSaveButton(nameValue, startWeightValue, goalWeightValue, goalDailyCaloriesValue, activityLevelValue)
   }
 
   goalWeightInput.addTextChangedListener {
@@ -96,7 +96,7 @@ class EditCatDetailsFragment : DialogFragment() {
     0
    else
     goalWeightInput.text.toString().toInt()*1000
-   updateSaveButton(nameValue, currentWeightValue, goalWeightValue, goalDailyCaloriesValue, activityLevelValue)
+   updateSaveButton(nameValue, startWeightValue, goalWeightValue, goalDailyCaloriesValue, activityLevelValue)
   }
 
   goalDailyCaloriesInput.addTextChangedListener {
@@ -104,7 +104,7 @@ class EditCatDetailsFragment : DialogFragment() {
     0
    else
     goalDailyCaloriesInput.text.toString().toInt()
-   updateSaveButton(nameValue, currentWeightValue, goalWeightValue, goalDailyCaloriesValue, activityLevelValue)
+   updateSaveButton(nameValue, startWeightValue, goalWeightValue, goalDailyCaloriesValue, activityLevelValue)
   }
 
   selectActivityLevelItem.addTextChangedListener {
@@ -114,7 +114,7 @@ class EditCatDetailsFragment : DialogFragment() {
 
   saveButton.setOnClickListener {
    if(selectedCat != null)
-     databaseViewModel.updateCat(Cat(selectedCat!!.id, nameValue, currentWeightValue.toInt(), goalWeightValue, 50, activityLevelValue, goalDailyCaloriesValue))
+     databaseViewModel.updateCat(Cat(selectedCat!!.id, nameValue, startWeightValue, goalWeightValue, 50, activityLevelValue, goalDailyCaloriesValue))
    dismiss()
   }
 

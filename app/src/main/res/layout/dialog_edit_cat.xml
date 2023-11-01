@@ -84,25 +84,25 @@
         app:layout_constraintTop_toBottomOf="@+id/nameInputLabel" />
 
     <TextView
-        android:id="@+id/currentWeightInputLabel"
+        android:id="@+id/startWeightInputLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:text="Current Weight (Kg):"
+        android:text="Start Weight (Kg):"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nameInput" />
 
     <EditText
-        android:id="@+id/currentWeightInput"
+        android:id="@+id/startWeightInput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:ems="10"
         android:inputType="numberDecimal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/currentWeightInputLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/startWeightInputLabel" />
 
     <TextView
         android:id="@+id/goalWeightInputLabel"
@@ -113,7 +113,7 @@
         android:text="Goal Weight (Kg):"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/currentWeightInput" />
+        app:layout_constraintTop_toBottomOf="@+id/startWeightInput" />
 
     <EditText
         android:id="@+id/goalWeightInput"
