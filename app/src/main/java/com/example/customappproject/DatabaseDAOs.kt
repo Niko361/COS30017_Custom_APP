@@ -16,7 +16,7 @@ interface CatDao {
     @Insert
     fun insert(cat: Cat)
     @Update
-    fun update(cat: Cat)
+    suspend fun update(cat: Cat)
     @Delete
     fun delete(cat: Cat)
     @Query("DELETE FROM cats")

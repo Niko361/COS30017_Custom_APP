@@ -13,6 +13,11 @@ class DatabaseRepository(private val catDao: CatDao, private val weightLogDao: W
         catDao.insert(cat)
     }
 
+
+    @WorkerThread
+    suspend fun updateCat(cat: Cat) {
+        catDao.update(cat)
+    }
     //val weightLogsForCat: Flow<List<Cat>> = catDao.getAll()
 
     @WorkerThread

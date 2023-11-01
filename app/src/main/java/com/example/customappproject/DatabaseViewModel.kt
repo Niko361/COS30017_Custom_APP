@@ -23,6 +23,10 @@ class DatabaseViewModel(private val repository: DatabaseRepository) : ViewModel(
         repository.insertCat(cat)
     }
 
+    fun updateCat(cat: Cat) = viewModelScope.launch {
+        repository.updateCat(cat)
+    }
+
 
     fun getAllWeightLogsForCat(catId: Int): LiveData<List<WeightLog>>{
         return repository.getAllWeightLogsForCat(catId).asLiveData()

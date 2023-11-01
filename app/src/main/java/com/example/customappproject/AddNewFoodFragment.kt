@@ -9,8 +9,6 @@ import android.widget.EditText
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
-import com.google.android.material.textfield.MaterialAutoCompleteTextView
-import java.time.LocalDateTime
 
 
 class AddNewFoodFragment : DialogFragment() {
