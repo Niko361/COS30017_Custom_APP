@@ -46,7 +46,7 @@ class DatabaseRepository(private val catDao: CatDao, private val weightLogDao: W
     }
 
     @WorkerThread
-    suspend fun getLatestRecordedWeightForCat(catId: Int): Int{
+    fun getLatestRecordedWeightForCat(catId: Int): Flow<Int>{
         return weightLogDao.getLatestRecordedWeightForCat(catId)
     }
 

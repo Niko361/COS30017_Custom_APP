@@ -62,6 +62,12 @@
                         android:text="Age: 7" />
 
                     <TextView
+                        android:id="@+id/startWeightText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Start Weight: 6kg" />
+
+                    <TextView
                         android:id="@+id/goalWeightText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

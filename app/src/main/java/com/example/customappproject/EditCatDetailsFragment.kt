@@ -1,7 +1,6 @@
 package com.example.customappproject
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -63,7 +62,7 @@ class EditCatDetailsFragment : DialogFragment() {
    selectedCat = cats[catId - 1]
 
    nameValue = selectedCat!!.name
-   currentWeightValue = selectedCat!!.currentWeightGrams
+   currentWeightValue = selectedCat!!.startWeightGrams
    goalWeightValue = selectedCat!!.goalWeightGrams
    goalDailyCaloriesValue = selectedCat!!.goalDailyCalories
    activityLevelValue = selectedCat!!.activityLevel

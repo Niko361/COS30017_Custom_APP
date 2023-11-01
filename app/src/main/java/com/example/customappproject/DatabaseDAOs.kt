@@ -36,7 +36,7 @@ interface WeightLogDao {
     @Query("DELETE FROM WeightLogs")
     suspend fun deleteAll()
     @Query("SELECT cat_weight_grams from WeightLogs WHERE cat_id = :catId ORDER BY id DESC LIMIT 1")
-    suspend fun getLatestRecordedWeightForCat(catId: Int): Int
+    fun getLatestRecordedWeightForCat(catId: Int): Flow<Int>
 }
 
 @Dao

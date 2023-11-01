@@ -39,6 +39,7 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         val nameText = view.findViewById<TextView>(R.id.nameText)
         val ageText = view.findViewById<TextView>(R.id.ageText)
         val goalWeightText = view.findViewById<TextView>(R.id.goalWeightText)
+        val startWeightText = view.findViewById<TextView>(R.id.startWeightText)
         val currentWeightText = view.findViewById<TextView>(R.id.currentWeightText)
         val currentWeightLossRateText = view.findViewById<TextView>(R.id.currentWeightLossRateText)
         val goalWeightLossRateText = view.findViewById<TextView>(R.id.goalWeightLossRateText)
@@ -83,25 +84,13 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
             ageText.text = "Age: PLACEHOLDER"
 
             goalWeightText.text = "Goal Weight: ${"%.2f".format(selectedCat.goalWeightGrams.toDouble() / 1000)} Kg"
+            startWeightText.text = "Start Weight: ${"%.2f".format(selectedCat.startWeightGrams.toDouble() / 1000)} Kg"
+            currentWeightLossRateText.text = "Current Loss Rate: PLACEHOLDER"
+            goalWeightLossRateText.text = "Goal Loss Rate: ${selectedCat.goalWeightLossRateGramsPerWeek} g/Week"
+        }
 
-            suspend {
-                currentWeightText.text = "Current Weight: ${
-                    "%.2f".format(
-                        databaseViewModel.getLatestRecordedWeightForCat(catId).toDouble() / 1000
-                    )
-                } Kg"
-            }
-
-
-            //currentWeightText.text = "Current Weight: ${"%.2f".format(fragmentWeightLogs[0].catWeightGrams.toDouble() / 1000)} Kg"
-            currentWeightLossRateText.text = "Current Weight Loss Rate: PLACEHOLDER"
-            goalWeightLossRateText.text = "Goal Weight Loss Rate: ${selectedCat.goalWeightLossRateGramsPerWeek} g/Week"
-
-            Log.i("TESTLOG", cats[catId-1].toString())
-            //Log.i("TESTLOG", cats.toString())
-            //cats?.let {
-            //    Log.i("TESTLOG", it.toString())
-            //}
+        databaseViewModel.getLatestRecordedWeightForCat(catId).observe(viewLifecycleOwner) {
+            currentWeightText.text = "Current Weight: ${"%.2f".format(it.toDouble() / 1000)} Kg"
         }
 
         val editCatButton = view.findViewById<Button>(R.id.editCatButton)
