@@ -7,9 +7,11 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
+import androidx.activity.viewModels
 import androidx.core.content.getSystemService
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationBarView
@@ -17,42 +19,22 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 class LogWeightFragment: Fragment(R.layout.fragment_log_weight){
-    var weightLogs = mutableListOf(
-        GenericLogEntry(LocalDateTime.parse("22/10/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), "6.04Kg"),
-        GenericLogEntry(LocalDateTime.parse("21/10/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), "6.10Kg"),
-        GenericLogEntry(LocalDateTime.parse("20/10/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), "6.18Kg"),
-        GenericLogEntry(LocalDateTime.parse("19/10/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), "6.20Kg"),
-        GenericLogEntry(LocalDateTime.parse("18/10/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), "6.22Kg"),
-        GenericLogEntry(LocalDateTime.parse("17/10/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), "6.25Kg"),
-        GenericLogEntry(LocalDateTime.parse("16/10/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), "6.30Kg"),
-        GenericLogEntry(LocalDateTime.parse("15/10/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), "6.33Kg"),
-        GenericLogEntry(LocalDateTime.parse("14/10/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), "6.35Kg"),
-        GenericLogEntry(LocalDateTime.parse("13/10/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), "6.38Kg"),
-        GenericLogEntry(LocalDateTime.parse("12/10/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), "6.40Kg"),
-        GenericLogEntry(LocalDateTime.parse("11/10/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), "6.44Kg"),
-        GenericLogEntry(LocalDateTime.parse("10/10/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), "6.45Kg"),
-        GenericLogEntry(LocalDateTime.parse("09/10/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), "6.5Kg"),
-        GenericLogEntry(LocalDateTime.parse("23/09/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), "6.55Kg"),
-        GenericLogEntry(LocalDateTime.parse("22/09/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), "6.60Kg"),
-        GenericLogEntry(LocalDateTime.parse("21/09/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), "6.60Kg"),
-        GenericLogEntry(LocalDateTime.parse("20/09/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), "6.62Kg"),
-        GenericLogEntry(LocalDateTime.parse("19/09/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), "6.62Kg"),
-        GenericLogEntry(LocalDateTime.parse("18/09/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), "6.64Kg"),
-        GenericLogEntry(LocalDateTime.parse("17/09/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), "6.65Kg"),
-        GenericLogEntry(LocalDateTime.parse("16/09/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), "6.66Kg"),
-        GenericLogEntry(LocalDateTime.parse("15/09/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), "6.67Kg"),
-        GenericLogEntry(LocalDateTime.parse("14/09/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), "6.70Kg"),
-        GenericLogEntry(LocalDateTime.parse("13/09/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), "6.71Kg"),
-        GenericLogEntry(LocalDateTime.parse("12/09/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), "6.73Kg"),
-        GenericLogEntry(LocalDateTime.parse("11/09/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), "6.74Kg"),
-        GenericLogEntry(LocalDateTime.parse("10/09/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), "6.75Kg"),
-        GenericLogEntry(LocalDateTime.parse("09/09/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), "6.75Kg"),
-    )
+    private val databaseViewModel: DatabaseViewModel by activityViewModels()
+
+    //private val databaseViewModel: DatabaseViewModel by viewModels {
+    //    WordViewModelFactory((application as CatApplication).repository)
+    //}
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        drawRecyclerView()
+        databaseViewModel.getAllWeightLogsForCat(1).observe(viewLifecycleOwner) { weightLogs ->
+            Log.i("TESTLOG", weightLogs.toString())
+            drawRecyclerView(weightLogs)
+
+        }
+
+        //drawRecyclerView()
 
         var weightEntryWeight: Double = 0.0
 
@@ -60,8 +42,8 @@ class LogWeightFragment: Fragment(R.layout.fragment_log_weight){
         val logWeightButton = view.findViewById<Button>(R.id.logWeightButton)
 
         logWeightButton.setOnClickListener {
-            weightLogs.add(GenericLogEntry(LocalDateTime.now(), "${weightEntryWeight}Kg"))
-            drawRecyclerView()
+            //weightLogs.add(GenericLogEntry(LocalDateTime.now(), "${weightEntryWeight}Kg"))
+            //drawRecyclerView()
             // close keyboard after entering weight
             //val view: View? = this.currentFocus
             if (view != null) {
@@ -83,11 +65,11 @@ class LogWeightFragment: Fragment(R.layout.fragment_log_weight){
 
     }
 
-    fun drawRecyclerView()
+    fun drawRecyclerView(input: List<WeightLog>)
     {
-        weightLogs.sortByDescending{it.datetime}
+        //weightLogs.sortByDescending{it.datetime}
         val list = view?.findViewById<RecyclerView>(R.id.genericLogRecyclerView)
-        list?.adapter = GenericLogListAdapter(weightLogs)
+        list?.adapter = GenericLogListAdapter(input)
         list?.layoutManager = LinearLayoutManager(requireContext())
     }
 }

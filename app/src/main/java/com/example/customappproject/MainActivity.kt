@@ -21,22 +21,22 @@ class MainActivity : AppCompatActivity() {
         val allCats = databaseViewModel.allCats
 
         databaseViewModel.allCats.observe(this) {cats ->
-            Log.i("TESTLOG", cats.toString())
+            //Log.i("TESTLOG", cats.toString())
             //cats?.let {
             //    Log.i("TESTLOG", it.toString())
             //}
         }
 
         databaseViewModel.getAllWeightLogsForCat(1).observe(this) { weightLogs ->
-            Log.i("TESTLOG", weightLogs.toString())
+            //Log.i("TESTLOG", weightLogs.toString())
         }
 
         databaseViewModel.getAllFoodLogsForCat(1).observe(this) { foodLogs ->
-            Log.i("TESTLOG", foodLogs.toString())
+            //Log.i("TESTLOG", foodLogs.toString())
         }
 
         databaseViewModel.allFoodTypes.observe(this) {foodTypes ->
-            Log.i("TESTLOG", foodTypes.toString())
+            //Log.i("TESTLOG", foodTypes.toString())
         }
 
 
@@ -78,6 +78,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun replaceFragment(fragment : Fragment){
+        val arguments: Bundle = Bundle()
+        arguments.putString("KEY", "STRING")
+        fragment.arguments = arguments
 
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
