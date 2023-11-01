@@ -6,8 +6,6 @@ import android.util.Log
 import androidx.activity.viewModels
 import com.google.android.material.navigation.NavigationBarView
 import androidx.fragment.app.Fragment
-import androidx.room.ColumnInfo
-import androidx.room.Room
 
 class MainActivity : AppCompatActivity() {
     private val databaseViewModel: DatabaseViewModel by viewModels {
@@ -64,7 +62,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.feed_cat -> {
                     //Log.i("LOGME", "FEED")
-                    replaceFragment(LogFoodEntryFragment())
+                    replaceFragment(LogFoodFragment())
                 }
                 R.id.home -> {
                     //Log.i("LOGME", "HOME")

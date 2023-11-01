@@ -14,12 +14,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.navigation.NavigationBarView
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
-class LogFoodEntryFragment: Fragment(R.layout.fragment_log_food){
+class LogFoodFragment: Fragment(R.layout.fragment_log_food){
     private val databaseViewModel: DatabaseViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
