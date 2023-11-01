@@ -5,9 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import java.text.DecimalFormat
 import java.time.format.DateTimeFormatter
 
-class GenericLogListAdapter(private val logList: List<GenericLogEntry>): RecyclerView.Adapter<GenericLogListAdapter.ViewHolder>() {
+class GenericLogListAdapter(private val logList: List<*>): RecyclerView.Adapter<GenericLogListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -20,7 +21,10 @@ class GenericLogListAdapter(private val logList: List<GenericLogEntry>): Recycle
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = logList[position]
-        holder.bind(item)
+        if(item is FoodLog)
+            holder.bind(item)
+        else if(item is WeightLog)
+            holder.bind(item)
     }
 
     inner class ViewHolder(val v: View): RecyclerView.ViewHolder(v) {
@@ -29,9 +33,15 @@ class GenericLogListAdapter(private val logList: List<GenericLogEntry>): Recycle
 
         //Group(val id: Int, val group: String, val location: String, val type: String, val datetime: LocalDateTime)
 
-        fun bind(item: GenericLogEntry) {
-            dateText.text = item.datetime.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
-            dataText.text = item.value
+        fun bind(item: FoodLog) {
+            dateText.text = item.dateTime.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+            dataText.text = "${item.calories} Cal"
         }
+
+        fun bind(item: WeightLog) {
+            dateText.text = item.dateTime.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+            dataText.text = "${"%.2f".format(item.catWeightGrams.toDouble()/1000)} Kg"
+        }
+
     }
 }
