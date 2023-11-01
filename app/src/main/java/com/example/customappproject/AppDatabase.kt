@@ -80,7 +80,7 @@ abstract class AppDatabase : RoomDatabase() {
             cat = Cat(2, "Lucky", 4500, 3900, 45, "Moderately Active", 95)
             catDao.insert(cat)
 
-            val weightLogs = listOf(
+            val weightLogs = mutableListOf(
                 WeightLog(catId=1, dateTime= LocalDateTime.parse("22/10/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), catWeightGrams=6040),
                 WeightLog(catId=1, dateTime=LocalDateTime.parse("21/10/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), catWeightGrams=6100),
                 WeightLog(catId=1, dateTime=LocalDateTime.parse("20/10/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), catWeightGrams=6180),
@@ -112,12 +112,14 @@ abstract class AppDatabase : RoomDatabase() {
                 WeightLog(catId=1, dateTime=LocalDateTime.parse("09/09/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), catWeightGrams=6750),
             )
 
+            weightLogs.sortBy { it.dateTime }
+
             weightLogDao.deleteAll()
             weightLogs.forEach {
                 weightLogDao.insert(it)
             }
 
-            val calorieLogs = listOf(
+            val calorieLogs = mutableListOf(
                 FoodLog(catId=1, dateTime=LocalDateTime.parse("22/10/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), foodWeightGrams=40, calories=80),
                 FoodLog(catId=1, dateTime=LocalDateTime.parse("21/10/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), foodWeightGrams=40, calories=80),
                 FoodLog(catId=1, dateTime=LocalDateTime.parse("20/10/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), foodWeightGrams=40, calories=80),
@@ -148,6 +150,8 @@ abstract class AppDatabase : RoomDatabase() {
                 FoodLog(catId=1, dateTime=LocalDateTime.parse("10/09/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), foodWeightGrams=40, calories=80),
                 FoodLog(catId=1, dateTime=LocalDateTime.parse("09/09/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), foodWeightGrams=40, calories=80)
             )
+
+            calorieLogs.sortBy { it.dateTime }
 
             foodLogDao.deleteAll()
             calorieLogs.forEach {
