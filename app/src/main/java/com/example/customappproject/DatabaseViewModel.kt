@@ -1,5 +1,6 @@
 package com.example.customappproject
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -24,8 +25,14 @@ class DatabaseViewModel(private val repository: DatabaseRepository) : ViewModel(
 
 
     fun getAllWeightLogsForCat(catId: Int): LiveData<List<WeightLog>>{
-        return repository.getWeightLogsForCat(catId).asLiveData()
+        return repository.getAllWeightLogsForCat(catId).asLiveData()
     }
+
+    fun getAllFoodLogsForCat(catId: Int): LiveData<List<FoodLog>>{
+        return repository.getAllFoodLogsForCat(catId).asLiveData()
+    }
+
+    val allFoodTypes: LiveData<List<FoodType>> = repository.allFoodTypes.asLiveData()
 
 
 }

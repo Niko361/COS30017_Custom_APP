@@ -1,6 +1,7 @@
 package com.example.customappproject
 
 import android.content.Context
+import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -17,6 +18,8 @@ import java.time.format.DateTimeFormatter
 abstract class AppDatabase : RoomDatabase() {
     abstract fun catDao(): CatDao
     abstract fun weightLogDao(): WeightLogDao
+    abstract fun foodLogDao(): FoodLogDao
+    abstract fun foodTypeDao(): FoodTypeDao
 
 
     companion object {
@@ -57,7 +60,7 @@ abstract class AppDatabase : RoomDatabase() {
                 // comment out the following line.
                 INSTANCE?.let { database ->
                     scope.launch(Dispatchers.IO) {
-                        populateDatabase(database.catDao(), database.weightLogDao())
+                        populateDatabase(database.catDao(), database.weightLogDao(), database.foodLogDao(), database.foodTypeDao())
                     }
                 }
             }
@@ -67,7 +70,7 @@ abstract class AppDatabase : RoomDatabase() {
          * Populate the database in a new coroutine.
          * If you want to start with more words, just add them.
          */
-        suspend fun populateDatabase(catDao: CatDao, weightLogDao: WeightLogDao) {
+        suspend fun populateDatabase(catDao: CatDao, weightLogDao: WeightLogDao, foodLogDao: FoodLogDao, foodTypeDao: FoodTypeDao) {
             // Start the app with a clean database every time.
             // Not needed if you only populate on creation.
             catDao.deleteAll()
@@ -76,10 +79,8 @@ abstract class AppDatabase : RoomDatabase() {
             catDao.insert(cat)
             cat = Cat(2, "Lucky", 4500, 3900, 45, "Moderately Active", 95)
             catDao.insert(cat)
-            //word = Word("World!")
-            //catDao.insert(word)
 
-            var weightLogs = mutableListOf(
+            val weightLogs = listOf(
                 WeightLog(catId=1, dateTime= LocalDateTime.parse("22/10/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), catWeightGrams=6040),
                 WeightLog(catId=1, dateTime=LocalDateTime.parse("21/10/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), catWeightGrams=6100),
                 WeightLog(catId=1, dateTime=LocalDateTime.parse("20/10/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), catWeightGrams=6180),
@@ -112,10 +113,58 @@ abstract class AppDatabase : RoomDatabase() {
             )
 
             weightLogDao.deleteAll()
-
-
             weightLogs.forEach {
                 weightLogDao.insert(it)
+            }
+
+            val calorieLogs = listOf(
+                FoodLog(catId=1, dateTime=LocalDateTime.parse("22/10/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), foodWeightGrams=40, calories=80),
+                FoodLog(catId=1, dateTime=LocalDateTime.parse("21/10/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), foodWeightGrams=40, calories=80),
+                FoodLog(catId=1, dateTime=LocalDateTime.parse("20/10/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), foodWeightGrams=40, calories=80),
+                FoodLog(catId=1, dateTime=LocalDateTime.parse("19/10/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), foodWeightGrams=40, calories=80),
+                FoodLog(catId=1, dateTime=LocalDateTime.parse("18/10/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), foodWeightGrams=40, calories=80),
+                FoodLog(catId=1, dateTime=LocalDateTime.parse("17/10/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), foodWeightGrams=40, calories=80),
+                FoodLog(catId=1, dateTime=LocalDateTime.parse("16/10/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), foodWeightGrams=40, calories=80),
+                FoodLog(catId=1, dateTime=LocalDateTime.parse("15/10/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), foodWeightGrams=40, calories=80),
+                FoodLog(catId=1, dateTime=LocalDateTime.parse("14/10/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), foodWeightGrams=40, calories=80),
+                FoodLog(catId=1, dateTime=LocalDateTime.parse("13/10/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), foodWeightGrams=40, calories=80),
+                FoodLog(catId=1, dateTime=LocalDateTime.parse("12/10/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), foodWeightGrams=40, calories=80),
+                FoodLog(catId=1, dateTime=LocalDateTime.parse("11/10/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), foodWeightGrams=40, calories=80),
+                FoodLog(catId=1, dateTime=LocalDateTime.parse("10/10/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), foodWeightGrams=40, calories=80),
+                FoodLog(catId=1, dateTime=LocalDateTime.parse("09/10/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), foodWeightGrams=40, calories=80),
+                FoodLog(catId=1, dateTime=LocalDateTime.parse("23/09/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), foodWeightGrams=40, calories=80),
+                FoodLog(catId=1, dateTime=LocalDateTime.parse("22/09/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), foodWeightGrams=40, calories=80),
+                FoodLog(catId=1, dateTime=LocalDateTime.parse("21/09/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), foodWeightGrams=40, calories=80),
+                FoodLog(catId=1, dateTime=LocalDateTime.parse("20/09/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), foodWeightGrams=40, calories=80),
+                FoodLog(catId=1, dateTime=LocalDateTime.parse("19/09/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), foodWeightGrams=40, calories=80),
+                FoodLog(catId=1, dateTime=LocalDateTime.parse("18/09/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), foodWeightGrams=40, calories=80),
+                FoodLog(catId=1, dateTime=LocalDateTime.parse("17/09/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), foodWeightGrams=40, calories=80),
+                FoodLog(catId=1, dateTime=LocalDateTime.parse("16/09/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), foodWeightGrams=40, calories=80),
+                FoodLog(catId=1, dateTime=LocalDateTime.parse("15/09/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), foodWeightGrams=40, calories=80),
+                FoodLog(catId=1, dateTime=LocalDateTime.parse("14/09/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), foodWeightGrams=40, calories=80),
+                FoodLog(catId=1, dateTime=LocalDateTime.parse("13/09/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), foodWeightGrams=40, calories=80),
+                FoodLog(catId=1, dateTime=LocalDateTime.parse("12/09/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), foodWeightGrams=40, calories=80),
+                FoodLog(catId=1, dateTime=LocalDateTime.parse("11/09/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), foodWeightGrams=40, calories=80),
+                FoodLog(catId=1, dateTime=LocalDateTime.parse("10/09/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), foodWeightGrams=40, calories=80),
+                FoodLog(catId=1, dateTime=LocalDateTime.parse("09/09/23 19:00", DateTimeFormatter.ofPattern("dd/MM/yy HH:mm")), foodWeightGrams=40, calories=80)
+            )
+
+            foodLogDao.deleteAll()
+            calorieLogs.forEach {
+                foodLogDao.insert(it)
+                Log.i("TESTLOG", it.toString())
+            }
+
+            val foodTypes = listOf(
+                FoodType(foodName="Whiskas, Wet", calsPerHundredGrams = 50),
+                FoodType(foodName="Friskies, Dry", calsPerHundredGrams = 100),
+                FoodType(foodName="Purina, Wet", calsPerHundredGrams = 60)
+            )
+
+            foodTypeDao.deleteAll()
+            foodTypes.forEach {
+                foodTypeDao.insert(it)
+                //Log.i("TESTLOG", it.toString())
             }
 
 

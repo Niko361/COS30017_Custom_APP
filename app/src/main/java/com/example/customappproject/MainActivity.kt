@@ -31,6 +31,15 @@ class MainActivity : AppCompatActivity() {
             Log.i("TESTLOG", weightLogs.toString())
         }
 
+        databaseViewModel.getAllFoodLogsForCat(1).observe(this) { foodLogs ->
+            Log.i("TESTLOG", foodLogs.toString())
+        }
+
+        databaseViewModel.allFoodTypes.observe(this) {foodTypes ->
+            Log.i("TESTLOG", foodTypes.toString())
+        }
+
+
         //Log.i("TESTLOG", databaseViewModel.allCats.toString())
 
 

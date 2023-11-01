@@ -39,7 +39,7 @@ interface WeightLogDao {
 
 @Dao
 interface FoodLogDao {
-    @Query("SELECT * from FoodLogs JOIN FoodTypes ON FoodLogs.food_id = FoodTypes.id WHERE cat_id = :catId")
+    @Query("SELECT * from FoodLogs LEFT JOIN FoodTypes ON FoodLogs.food_id = FoodTypes.id WHERE cat_id = :catId")
     fun getAllFoodLogsForCat(catId: Int): Flow<List<FoodLog>>
     @Insert
     fun insert(foodLog: FoodLog)
