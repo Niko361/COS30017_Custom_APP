@@ -53,25 +53,25 @@
                         android:id="@+id/nameText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Name: Mittens" />
+                        android:text="@string/name_label" />
 
                     <TextView
                         android:id="@+id/ageText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Age: 7" />
+                        android:text="@string/age_label" />
 
                     <TextView
                         android:id="@+id/startWeightText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Start Weight: 6kg" />
+                        android:text="@string/start_weight_label" />
 
                     <TextView
                         android:id="@+id/goalWeightText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Goal Weight: 6kg" />
+                        android:text="@string/goal_weight_label" />
 
                 </LinearLayout>
 
@@ -95,19 +95,19 @@
                 android:id="@+id/currentWeightText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Current Weight: 5kg" />
+                android:text="@string/current_weight_label" />
 
             <TextView
                 android:id="@+id/currentWeightLossRateText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Current Loss Rate: 250g/Week" />
+                android:text="@string/current_loss_rate_label" />
 
             <TextView
                 android:id="@+id/goalWeightLossRateText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Goal Loss Rate: 50g/Week" />
+                android:text="@string/goal_loss_rate_label" />
         </LinearLayout>
     </LinearLayout>
 
@@ -133,7 +133,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Today (13/10/2013) Daily Cals: 50/100" />
+            android:text="@string/day_selector_placeholder" />
 
         <Button
             android:id="@+id/nextDateButton"
@@ -164,7 +164,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
-                android:text="Log"
+                android:text="@string/log"
                 android:textSize="24sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -182,14 +182,14 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:checkable="true"
-                    android:text="Calories"/>
+                    android:text="@string/calories"/>
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/weightChip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checkable="true"
-                    android:text="Weight" />
+                    android:text="@string/weight" />
             </com.google.android.material.chip.ChipGroup>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

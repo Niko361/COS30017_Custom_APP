@@ -45,7 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:text="Mittens"
+                android:text="@string/placeholder"
                 app:layout_constraintBottom_toBottomOf="@+id/dpCard1"
                 app:layout_constraintStart_toEndOf="@+id/dpCard1"
                 app:layout_constraintTop_toTopOf="@+id/dpCard1" />
@@ -74,7 +74,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:text="Lucky"
+                android:text="@string/placeholder"
                 app:layout_constraintBottom_toBottomOf="@+id/dpCard2"
                 app:layout_constraintStart_toEndOf="@+id/dpCard2"
                 app:layout_constraintTop_toTopOf="@+id/dpCard2" />
@@ -94,7 +94,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:text="Add Cat"
+                android:text="@string/placeholder"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView5"
                 app:layout_constraintStart_toEndOf="@+id/imageView5"
                 app:layout_constraintTop_toTopOf="@+id/imageView5" />

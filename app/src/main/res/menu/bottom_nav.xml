@@ -7,19 +7,19 @@
         android:layout_height="wrap_content"
         android:icon="@drawable/baseline_scale_48"
         android:enabled="true"
-        android:title="Weight Cat" />
+        android:title="@string/weight_cat"/>
     <item
         android:id="@+id/home"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:icon="@drawable/baseline_home_48"
         android:enabled="true"
-        android:title="Home" />
+        android:title="@string/home" />
     <item
         android:id="@+id/feed_cat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:enabled="true"
         android:icon="@drawable/baseline_fastfood_48"
-        android:title="Feed Cat" />
+        android:title="@string/feed_cat" />
 </menu>

@@ -1,3 +1,43 @@
 <resources>
     <string name="app_name">CustomAppProject</string>
+    <string name="name_label">Name:</string>
+    <string name="age_label">Age:</string>
+    <string name="start_weight_label">Start Weight:</string>
+    <string name="goal_weight_label">Goal Weight:</string>
+    <string name="current_weight_label">Current Weight:</string>
+    <string name="current_loss_rate_label">Current Loss Rate:</string>
+    <string name="goal_loss_rate_label">Goal Loss Rate:</string>
+    <string name="day_selector_placeholder">Today (13/10/2013) Daily Cals: 50/100</string>
+    <string name="log">Log</string>
+    <string name="calories">Calories</string>
+    <string name="weight">Weight</string>
+    <string name="weight_cat">Weight Cat</string>
+    <string name="home">Home</string>
+    <string name="feed_cat">Feed Cat</string>
+    <string name="current_weight_kg">Current Weight (Kg):</string>
+    <string name="log_weight">Log Weight</string>
+    <string name="log_food">Log Food</string>
+    <string name="food_weight_g">Food Weight (g):</string>
+    <string name="remaining_daily_calories">Remaining Daily Calories:</string>
+    <string name="select_food_hint">Select Food</string>
+    <string name="edit_cat_details">Edit Cat Details</string>
+    <string name="start_weight_kg">Start Weight (Kg):</string>
+    <string name="goal_weight_kg">Goal Weight (Kg):</string>
+    <string name="goal_daily_calories">Goal Daily Calories:</string>
+    <string name="replace_image">Replace Image</string>
+    <string name="add_new_food">Add New Food</string>
+    <string name="brand_label">Brand:</string>
+    <string name="calories_per_hundred_grams">Calories per 100g:</string>
+    <string name="save">Save</string>
+    <string name="select_activity_level">Select Activity Level</string>
+    <string name="remaining_daily_calories_placeholder">0/0</string>
+    <string name="food_label">Food:</string>
+    <string name="placeholder">PLACEHOLDER</string>
+
+    <string name="cal">Cal</string>
+    <string name="kg">Kg</string>
+    <string name="g_week">g/Week</string>
+
+
+
 </resources>

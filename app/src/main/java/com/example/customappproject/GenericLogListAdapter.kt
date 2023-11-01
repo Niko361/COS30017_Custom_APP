@@ -1,11 +1,11 @@
 package com.example.customappproject
 
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import java.text.DecimalFormat
 import java.time.format.DateTimeFormatter
 
 class GenericLogListAdapter(private val logList: List<*>): RecyclerView.Adapter<GenericLogListAdapter.ViewHolder>() {

@@ -113,8 +113,7 @@ class EditCatDetailsFragment : DialogFragment() {
 
 
   saveButton.setOnClickListener {
-   if(selectedCat != null)
-     databaseViewModel.updateCat(Cat(selectedCat!!.id, nameValue, startWeightValue, goalWeightValue, 50, activityLevelValue, goalDailyCaloriesValue))
+   databaseViewModel.updateCat(Cat(catId, nameValue, startWeightValue, goalWeightValue, 50, activityLevelValue, goalDailyCaloriesValue))
    dismiss()
   }
 

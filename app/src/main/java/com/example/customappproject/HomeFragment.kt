@@ -7,15 +7,10 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.Chip
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.suspendCancellableCoroutine
-import kotlin.coroutines.coroutineContext
-import kotlin.coroutines.suspendCoroutine
+
 
 class HomeFragment: Fragment(R.layout.fragment_home) {
     private val databaseViewModel: DatabaseViewModel by activityViewModels()
@@ -80,17 +75,17 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         databaseViewModel.allCats.observe(viewLifecycleOwner) {cats ->
             val selectedCat = cats[catId-1]
 
-            nameText.text = "Name: ${selectedCat.name}"
-            ageText.text = "Age: PLACEHOLDER"
+            nameText.text = "${resources.getString(R.string.name_label)} ${selectedCat.name}"
+            ageText.text = "${resources.getString(R.string.age_label)} ${resources.getString(R.string.placeholder)}"
 
-            goalWeightText.text = "Goal Weight: ${"%.2f".format(selectedCat.goalWeightGrams.toDouble() / 1000)} Kg"
-            startWeightText.text = "Start Weight: ${"%.2f".format(selectedCat.startWeightGrams.toDouble() / 1000)} Kg"
-            currentWeightLossRateText.text = "Current Loss Rate: PLACEHOLDER"
-            goalWeightLossRateText.text = "Goal Loss Rate: ${selectedCat.goalWeightLossRateGramsPerWeek} g/Week"
+            goalWeightText.text = "${resources.getString(R.string.goal_weight_label)} ${"%.2f".format(selectedCat.goalWeightGrams.toDouble() / 1000)} ${resources.getString(R.string.kg)}"
+            startWeightText.text = "${resources.getString(R.string.start_weight_label)} ${"%.2f".format(selectedCat.startWeightGrams.toDouble() / 1000)} ${resources.getString(R.string.kg)}"
+            currentWeightLossRateText.text = "${resources.getString(R.string.current_loss_rate_label)} ${resources.getString(R.string.placeholder)}"
+            goalWeightLossRateText.text = "${resources.getString(R.string.goal_loss_rate_label)} ${selectedCat.goalWeightLossRateGramsPerWeek} ${resources.getString(R.string.g_week)}"
         }
 
         databaseViewModel.getLatestRecordedWeightForCat(catId).observe(viewLifecycleOwner) {
-            currentWeightText.text = "Current Weight: ${"%.2f".format(it.toDouble() / 1000)} Kg"
+            currentWeightText.text = "${resources.getString(R.string.current_weight_label)} ${"%.2f".format(it.toDouble() / 1000)} ${resources.getString(R.string.kg)}"
         }
 
         val editCatButton = view.findViewById<Button>(R.id.editCatButton)
