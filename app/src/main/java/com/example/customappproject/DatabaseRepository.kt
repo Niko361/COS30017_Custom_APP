@@ -15,10 +15,15 @@ class DatabaseRepository(private val catDao: CatDao, private val weightLogDao: W
 
     //val weightLogsForCat: Flow<List<Cat>> = catDao.getAll()
 
-    @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun insertWeightLog(weightLog: WeightLog) {
         weightLogDao.insert(weightLog)
+    }
+
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun insertFoodLog(foodLog: FoodLog) {
+        foodLogDao.insert(foodLog)
     }
 
     //@Suppress("RedundantSuspendModifier")

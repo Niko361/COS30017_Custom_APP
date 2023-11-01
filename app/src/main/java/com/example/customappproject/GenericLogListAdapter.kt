@@ -34,7 +34,7 @@ class GenericLogListAdapter(private val logList: List<*>): RecyclerView.Adapter<
         //Group(val id: Int, val group: String, val location: String, val type: String, val datetime: LocalDateTime)
 
         fun bind(item: FoodLog) {
-            dateText.text = item.dateTime.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+            dateText.text = item.dateTime.format(DateTimeFormatter.ofPattern("dd/MM/yy HH:mm"))
             dataText.text = "${item.calories} Cal"
         }
 

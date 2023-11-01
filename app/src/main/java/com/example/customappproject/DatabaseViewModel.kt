@@ -38,6 +38,10 @@ class DatabaseViewModel(private val repository: DatabaseRepository) : ViewModel(
         repository.insertWeightLog(weightLog)
     }
 
+    fun insertFoodEntry(foodLog: FoodLog) = viewModelScope.launch {
+        repository.insertFoodLog(foodLog)
+    }
+
 
 }
 
