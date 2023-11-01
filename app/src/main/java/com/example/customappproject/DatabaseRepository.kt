@@ -20,10 +20,14 @@ class DatabaseRepository(private val catDao: CatDao, private val weightLogDao: W
         weightLogDao.insert(weightLog)
     }
 
-    @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun insertFoodLog(foodLog: FoodLog) {
         foodLogDao.insert(foodLog)
+    }
+
+    @WorkerThread
+    suspend fun insertFoodType(foodType: FoodType) {
+        foodTypeDao.insert(foodType)
     }
 
     //@Suppress("RedundantSuspendModifier")

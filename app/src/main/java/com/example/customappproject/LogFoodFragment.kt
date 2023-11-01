@@ -95,7 +95,6 @@ class LogFoodFragment: Fragment(R.layout.fragment_log_food){
                 foodWeightEditText.text.toString().toInt()
             foodUpdate()
         }
-
         foodUpdate()
     }
 
