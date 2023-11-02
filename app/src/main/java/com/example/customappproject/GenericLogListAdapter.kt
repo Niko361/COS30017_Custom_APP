@@ -66,20 +66,6 @@ class GenericLogListAdapter(private val logList: List<*>, private val fragmentMa
             dateText.text = item.dateTime.format(DateTimeFormatter.ofPattern("dd/MM/yy HH:mm"))
             dataText.text = "${item.calories} Cal"
 
-            /*
-            genericLogLayout.setOnLongClickListener {
-                Log.i("TESTLOG", item.toString())
-
-                var foodLogId = 0
-
-                if(item is FoodLog)
-                    foodLogId = item.id
-
-                val modalBottomSheet = ConfirmDeleteLogEntryBottomSheetDialogFragment.newInstance(foodLogId,0)
-                modalBottomSheet.show(fragmentManager, ConfirmDeleteLogEntryBottomSheetDialogFragment.TAG)
-
-                true
-            }*/
         }
 
         fun bind(item: WeightLog) {

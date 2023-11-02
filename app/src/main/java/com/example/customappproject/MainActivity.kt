@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.activity.viewModels
 import com.google.android.material.navigation.NavigationBarView
 import androidx.fragment.app.Fragment
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class MainActivity : AppCompatActivity() {
     private val databaseViewModel: DatabaseViewModel by viewModels {
@@ -73,6 +74,30 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
+
+        bottomNavBar.setOnItemReselectedListener { item ->
+            when(item.itemId) {
+                R.id.weight_cat -> {
+                    Log.i("LOGME", "WEIGH")
+                    true
+
+                }
+                R.id.feed_cat -> {
+                    Log.i("LOGME", "FEED")
+                    true
+                }
+                R.id.home -> {
+                    Log.i("LOGME", "HOME")
+                    val modalBottomSheet = SelectCatBottomSheetDialogFragment()
+                    modalBottomSheet.show(supportFragmentManager, SelectCatBottomSheetDialogFragment.TAG)
+
+                    true
+                }
+                else -> false
+            }
+        }
+
+
     }
 
     private fun replaceFragment(fragment : Fragment){
