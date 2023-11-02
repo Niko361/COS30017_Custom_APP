@@ -50,6 +50,16 @@ class DatabaseRepository(private val catDao: CatDao, private val weightLogDao: W
         return weightLogDao.getLatestRecordedWeightForCat(catId)
     }
 
+    @WorkerThread
+    suspend fun deleteFoodLog(foodLogId: Int) {
+        foodLogDao.delete(foodLogId)
+    }
+
+    @WorkerThread
+    suspend fun deleteWeightLog(weightLogId: Int) {
+        weightLogDao.delete(weightLogId)
+    }
+
     val allFoodTypes: Flow<List<FoodType>> = foodTypeDao.getAllFoodTypes()
 
 }

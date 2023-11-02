@@ -54,6 +54,14 @@ class DatabaseViewModel(private val repository: DatabaseRepository) : ViewModel(
         return repository.getLatestRecordedWeightForCat(catId).asLiveData()
     }
 
+    fun deleteFoodLog(foodLogId: Int) = viewModelScope.launch {
+        repository.deleteFoodLog(foodLogId)
+    }
+
+    fun deleteWeightLog(weightLogId: Int) = viewModelScope.launch {
+        repository.deleteWeightLog(weightLogId)
+    }
+
 
 }
 

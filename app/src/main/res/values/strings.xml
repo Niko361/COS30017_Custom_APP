@@ -37,6 +37,8 @@
     <string name="cal">Cal</string>
     <string name="kg">Kg</string>
     <string name="g_week">g/Week</string>
+    <string name="delete_log_entry">Delete Log Entry?</string>
+    <string name="delete">Delete</string>
 
 
 

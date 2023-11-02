@@ -32,6 +32,7 @@ data class FoodType(
     @ColumnInfo(name = "food_name") val foodName: String,
     @ColumnInfo(name = "cals_per_hundred_grams") val calsPerHundredGrams: Int
 )
+
 @Entity (tableName = "FoodLogs", foreignKeys = [ForeignKey(entity = Cat::class, parentColumns = arrayOf("id"), childColumns = arrayOf("cat_id"), onDelete = ForeignKey.CASCADE),
                                                 ForeignKey(entity = FoodType::class, parentColumns = arrayOf("id"), childColumns = arrayOf("food_id"), onDelete = ForeignKey.SET_NULL)] )
 data class FoodLog(

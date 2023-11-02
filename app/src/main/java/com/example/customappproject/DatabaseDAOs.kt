@@ -31,8 +31,8 @@ interface WeightLogDao {
     suspend fun insert(weightLog: WeightLog)
     @Update
     fun update(weightLog: WeightLog)
-    @Delete
-    fun delete(weightLog: WeightLog)
+    @Query("DELETE FROM WeightLogs WHERE id = :weightLogId")
+    suspend fun delete(weightLogId: Int)
     @Query("DELETE FROM WeightLogs")
     suspend fun deleteAll()
     @Query("SELECT cat_weight_grams from WeightLogs WHERE cat_id = :catId ORDER BY id DESC LIMIT 1")
@@ -41,14 +41,14 @@ interface WeightLogDao {
 
 @Dao
 interface FoodLogDao {
-    @Query("SELECT * from FoodLogs LEFT JOIN FoodTypes ON FoodLogs.food_id = FoodTypes.id WHERE cat_id = :catId ORDER BY id DESC")
+    @Query("SELECT FoodLogs.id, FoodLogs.cat_id, FoodLogs.datetime, FoodLogs.food_weight_grams, FoodLogs.food_id, FoodLogs.calories, FoodTypes.food_name, FoodTypes.cals_per_hundred_grams from FoodLogs LEFT JOIN FoodTypes ON FoodLogs.food_id = FoodTypes.id WHERE cat_id = :catId ORDER BY FoodLogs.id DESC")
     fun getAllFoodLogsForCat(catId: Int): Flow<List<FoodLog>>
     @Insert
     suspend fun insert(foodLog: FoodLog)
     @Update
     fun update(foodLog: FoodLog)
-    @Delete
-    fun delete(foodLog: FoodLog)
+    @Query("DELETE FROM FoodLogs WHERE id = :foodLogId")
+    suspend fun delete(foodLogId: Int)
     @Query("DELETE FROM FoodLogs")
     suspend fun deleteAll()
 }

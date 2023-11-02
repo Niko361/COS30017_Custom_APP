@@ -73,7 +73,7 @@ class LogWeightFragment: Fragment(R.layout.fragment_log_weight){
     {
         //weightLogs.sortByDescending{it.datetime}
         val list = view?.findViewById<RecyclerView>(R.id.genericLogRecyclerView)
-        list?.adapter = GenericLogListAdapter(input)
+        list?.adapter = GenericLogListAdapter(input, childFragmentManager)
         list?.layoutManager = LinearLayoutManager(requireContext())
     }
 }

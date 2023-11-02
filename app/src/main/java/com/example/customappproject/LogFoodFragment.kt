@@ -124,7 +124,7 @@ class LogFoodFragment: Fragment(R.layout.fragment_log_food){
     {
         //calorieLogs.sortByDescending{it.datetime}
         val list = view?.findViewById<RecyclerView>(R.id.genericLogRecyclerView)
-        list?.adapter = GenericLogListAdapter(input)
+        list?.adapter = GenericLogListAdapter(input, childFragmentManager)
         list?.layoutManager = LinearLayoutManager(requireContext())
     }
 
