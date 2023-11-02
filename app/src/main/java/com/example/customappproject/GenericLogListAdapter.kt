@@ -1,6 +1,7 @@
 package com.example.customappproject
 
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,6 +26,15 @@ class GenericLogListAdapter(private val logList: List<*>): RecyclerView.Adapter<
             holder.bind(item)
         else if(item is WeightLog)
             holder.bind(item)
+
+        holder.itemView.setOnClickListener {
+            Log.i("TESTLOG", "CLICK")
+        }
+
+        holder.itemView.setOnLongClickListener {
+            Log.i("TESTLOG", "LONG CLICK")
+            true
+        }
     }
 
     inner class ViewHolder(val v: View): RecyclerView.ViewHolder(v) {
